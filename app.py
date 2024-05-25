@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import streamlit as st
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfReader, PdfMerger
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
@@ -10,11 +10,35 @@ from langchain_openai import OpenAI
 
 def main():
     load_dotenv()
-    st.set_page_config(page_title="Ask Faculty Workload Instructions")
-    st.header("Ask Faculty Workload Instructions")
+    st.set_page_config(
+        page_title="Ask Faculty Senate Constitution, Bylaws and Administrative Faculty Committee Bylaws"
+    )
+    st.image("./UNLV-186.png", width=200)
+    st.header("Faculty Senate AI Assistant 🤓", divider="rainbow")
+    st.header(
+        "Ask Faculty Senate Constitution, Bylaws and Administrative Faculty Committee Bylaws"
+    )
 
     # upload file
-    pdf = st.file_uploader("Upload PDF", type="pdf")
+    #  pdf = st.file_uploader("Upload PDF", type="pdf")
+    # pdf = "FacultySenateBylaws22.pdf"
+    # st.file_uploader()
+
+    pdfs = [
+        "./FacultySenateConstitution7-17.pdf",
+        "./FacultySenateBylaws22.pdf",
+        "./AFC By-Laws.pdf",
+    ]
+
+    merger = PdfMerger()
+
+    for pdf in pdfs:
+        merger.append(pdf)
+
+    merger.write("result.pdf")
+    merger.close()
+
+    pdf = "./result.pdf"
 
     # extract the text
     if pdf is not None:
@@ -34,7 +58,7 @@ def main():
         embeddings = OpenAIEmbeddings()
         knowledge_base = FAISS.from_texts(chunks, embeddings)
 
-        user_question = st.text_input("Ask a question about your PDF:")
+        user_question = st.text_input("Type your question here:")
         if user_question:
             docs = knowledge_base.similarity_search(user_question)
 
