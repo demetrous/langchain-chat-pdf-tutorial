@@ -19,6 +19,13 @@ def main():
         "Ask Faculty Senate Constitution, Bylaws and Administrative Faculty Committee Bylaws"
     )
 
+    with open("./FS_Const_Bylaws_AFC_Bylaws.pdf", "rb") as f:
+        st.download_button(
+            "Download the Constitution, Bylaws and AFC Bylaws combined PDF",
+            f,
+            file_name="./FS_Const_Bylaws_AFC_Bylaws.pdf",
+        )
+
     # upload file
     #  pdf = st.file_uploader("Upload PDF", type="pdf")
     # pdf = "FacultySenateBylaws22.pdf"
@@ -35,10 +42,10 @@ def main():
     for pdf in pdfs:
         merger.append(pdf)
 
-    merger.write("result.pdf")
+    merger.write("FS_Const_Bylaws_AFC_Bylaws.pdf")
     merger.close()
 
-    pdf = "./result.pdf"
+    pdf = "./FS_Const_Bylaws_AFC_Bylaws.pdf"
 
     # extract the text
     if pdf is not None:
