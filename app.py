@@ -26,11 +26,6 @@ def main():
             file_name="./FS_Const_Bylaws_AFC_Bylaws.pdf",
         )
 
-    # upload file
-    #  pdf = st.file_uploader("Upload PDF", type="pdf")
-    # pdf = "FacultySenateBylaws22.pdf"
-    # st.file_uploader()
-
     pdfs = [
         "./FacultySenateConstitution7-17.pdf",
         "./FacultySenateBylaws22.pdf",
